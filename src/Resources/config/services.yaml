@@ -1,0 +1,8 @@
+services:
+    pdf_bundle.helper.pdf:
+        class: Adamski\Symfony\PDFBundle\Helper\PDFHelper
+        arguments:
+            - "@twig"
+
+    Adamski\Symfony\PDFBundle\Helper\PDFHelper:
+        alias: pdf_bundle.helper.pdf
