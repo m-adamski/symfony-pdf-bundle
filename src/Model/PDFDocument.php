@@ -4,7 +4,6 @@ namespace Adamski\Symfony\PDFBundle\Model;
 
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use TCPDF_FONTS;
 use Twig\Environment;
 
 class PDFDocument {
@@ -60,9 +59,6 @@ class PDFDocument {
 
         // Include config
         $this->includeConfig();
-
-        // Add custom fonts
-        $this->registerCustomFont();
 
         // Create new TCPDF instance and set default options
         $this->pdfGenerator = new PDFGenerator($orientation, $unit, $format, $unicode, $encoding);
@@ -283,27 +279,12 @@ class PDFDocument {
     }
 
     /**
-     * Register new custom fonts.
-     */
-    protected function registerCustomFont() {
-
-        // Define custom font paths
-        $customFontPath = realpath(__DIR__ . "/../../fonts/Lato2OFL");
-
-        // Register new font with TCPDF Font tool
-        TCPDF_FONTS::addTTFfont($customFontPath . "/Lato-Regular.ttf", "TrueTypeUnicode", "");
-        TCPDF_FONTS::addTTFfont($customFontPath . "/Lato-Bold.ttf", "TrueTypeUnicode", "");
-        TCPDF_FONTS::addTTFfont($customFontPath . "/Lato-BoldItalic.ttf", "TrueTypeUnicode", "");
-        TCPDF_FONTS::addTTFfont($customFontPath . "/Lato-Italic.ttf", "TrueTypeUnicode", "");
-    }
-
-    /**
      * Return name of custom default font.
      *
      * @return string
      */
     protected function getDefaultFont() {
-        return "Lato";
+        return "Helvetica";
     }
 
     /**
@@ -332,9 +313,7 @@ class PDFDocument {
          * Path for PDF fonts.
          * By default it is automatically set but you can also set it as a fixed string to improve performances.
          */
-        if (!defined("K_PATH_FONTS")) {
-            define("K_PATH_FONTS", realpath(__DIR__ . "/../../fonts") . DIRECTORY_SEPARATOR);
-        }
+        // define ('K_PATH_FONTS', K_PATH_MAIN . 'fonts/');
 
         /**
          * Default images directory.
@@ -460,7 +439,7 @@ class PDFDocument {
          * Default main font name.
          */
         if (!defined("PDF_FONT_NAME_MAIN")) {
-            define("PDF_FONT_NAME_MAIN", "Lato");
+            define("PDF_FONT_NAME_MAIN", "Helvetica");
         }
 
         /**
@@ -474,7 +453,7 @@ class PDFDocument {
          * Default data font name.
          */
         if (!defined("PDF_FONT_NAME_DATA")) {
-            define("PDF_FONT_NAME_DATA", "Lato");
+            define("PDF_FONT_NAME_DATA", "Helvetica");
         }
 
         /**

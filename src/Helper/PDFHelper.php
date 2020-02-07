@@ -15,7 +15,7 @@ class PDFHelper {
     /**
      * PDFHelper constructor.
      *
-     * @param Environment     $twigEnvironment
+     * @param Environment $twigEnvironment
      */
     public function __construct(Environment $twigEnvironment) {
         $this->twigEnvironment = $twigEnvironment;

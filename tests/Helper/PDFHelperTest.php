@@ -17,7 +17,7 @@ class PDFHelperTest extends TestCase {
     /**
      * {@inheritdoc}
      */
-    protected function setUp() {
+    protected function setUp(): void {
         $twigMock = $this->createMock(Environment::class);
 
         $this->pdfHelper = new PDFHelper($twigMock);
@@ -26,7 +26,7 @@ class PDFHelperTest extends TestCase {
     /**
      * Test of initDocument method.
      */
-    public function testInitDocument() {
+    public function testInitDocument(): void {
         $pdfDocument = $this->pdfHelper->initDocument();
 
         $this->assertEquals(PDFDocument::class, get_class($pdfDocument));
