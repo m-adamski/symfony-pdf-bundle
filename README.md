@@ -1,6 +1,8 @@
-# PDF Bundle for Symfony 4
+# PDF Bundle for Symfony
 
 Helper whose goal is to simplify the process of generating PDF documents using the [TCPDF library](https://tcpdf.org).
+
+This bundle is compatible with Symfony 4.1 and Symfony 5.0. Symfony 3.4 compatibility abandoned.
 
 ## Installation
 
@@ -33,10 +35,6 @@ An instance of the PDFDocument class that will be generated using the helper con
 | getPDFData | The function returns the PDF document data                                                                                                   |
 
 There are also getters and setters for the basic parameters of a PDF document (author, tags, etc.).
-
-## Lato
-
-The default font used when generating PDF documents is [Lato](http://www.latofonts.com).
 
 ## License
 
