@@ -2,46 +2,18 @@
 
 namespace Adamski\Symfony\PDFBundle\Model;
 
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 class PDFDocument {
+    protected string $creator = "";
+    protected string $author = "";
+    protected string $title = "";
+    protected string $subject = "";
+    protected array $keywords = [];
 
-    /**
-     * @var PDFGenerator
-     */
-    protected $pdfGenerator;
-
-    /**
-     * @var Environment
-     */
-    protected $twigEnvironment;
-
-    /**
-     * @var string
-     */
-    protected $creator = "";
-
-    /**
-     * @var string
-     */
-    protected $author = "";
-
-    /**
-     * @var string
-     */
-    protected $title = "";
-
-    /**
-     * @var string
-     */
-    protected $subject = "";
-
-    /**
-     * @var array
-     */
-    protected $keywords = [];
+    protected PDFGenerator $pdfGenerator;
+    protected Environment $twigEnvironment;
 
     /**
      * PDFDocument constructor.
@@ -79,7 +51,7 @@ class PDFDocument {
      * @param string $content
      * @param bool   $newPage
      */
-    public function writeHTML(string $content, bool $newPage = false) {
+    public function writeHTML(string $content, bool $newPage = false): void {
         if ($this->pdfGenerator->getNumPages() <= 0 || $newPage) {
             $this->pdfGenerator->AddPage();
         }
@@ -94,14 +66,14 @@ class PDFDocument {
      * @param array  $data
      * @return bool
      */
-    public function renderHTML(string $template, array $data = []) {
+    public function renderHTML(string $template, array $data = []): bool {
         try {
             $this->writeHTML(
                 $this->twigEnvironment->render($template, $data)
             );
 
             return true;
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return false;
         }
     }
@@ -117,7 +89,7 @@ class PDFDocument {
      * @param string $contentAlign
      * @param string $pagesAlign
      */
-    public function setFooter(string $content, bool $printContent = true, bool $printPages = true, string $pagesPrefix = "", string $pagesPostfix = "", string $contentAlign = "L", string $pagesAlign = "R") {
+    public function setFooter(string $content, bool $printContent = true, bool $printPages = true, string $pagesPrefix = "", string $pagesPostfix = "", string $contentAlign = "L", string $pagesAlign = "R"): void {
 
         $this->pdfGenerator->setPrintFooter(true);
         $this->pdfGenerator->setFooterFunction(function (PDFGenerator $instance) use ($content, $printContent, $printPages, $pagesPrefix, $pagesPostfix, $contentAlign, $pagesAlign) {
@@ -147,7 +119,7 @@ class PDFDocument {
      * @param string   $style
      * @param int|null $size
      */
-    public function setFont(string $family, string $style = "N", ?int $size = null) {
+    public function setFont(string $family, string $style = "N", ?int $size = null): void {
         $this->pdfGenerator->SetFont($family, $style, $size);
     }
 
@@ -157,7 +129,7 @@ class PDFDocument {
      * @param string $path
      * @return string
      */
-    public function save(string $path) {
+    public function save(string $path): string {
         if (!preg_match("/\.pdf$/", $path)) {
             $path = $path . ".pdf";
         }
@@ -171,7 +143,7 @@ class PDFDocument {
      * @param string $name
      * @return Response
      */
-    public function output(string $name) {
+    public function output(string $name): Response {
         if (!preg_match("/\.pdf$/", $name)) {
             $name = $name . ".pdf";
         }
@@ -191,21 +163,21 @@ class PDFDocument {
      *
      * @return string
      */
-    public function getPDFData() {
+    public function getPDFData(): string {
         return $this->pdfGenerator->getPDFData();
     }
 
     /**
      * @return string
      */
-    public function getCreator() {
+    public function getCreator(): string {
         return $this->creator;
     }
 
     /**
      * @param string $creator
      */
-    public function setCreator(string $creator) {
+    public function setCreator(string $creator): void {
         $this->creator = $creator;
         $this->pdfGenerator->SetCreator($creator);
     }
@@ -213,14 +185,14 @@ class PDFDocument {
     /**
      * @return string
      */
-    public function getAuthor() {
+    public function getAuthor(): string {
         return $this->author;
     }
 
     /**
      * @param string $author
      */
-    public function setAuthor(string $author) {
+    public function setAuthor(string $author): void {
         $this->author = $author;
         $this->pdfGenerator->SetAuthor($author);
     }
@@ -228,14 +200,14 @@ class PDFDocument {
     /**
      * @return string
      */
-    public function getTitle() {
+    public function getTitle(): string {
         return $this->title;
     }
 
     /**
      * @param string $title
      */
-    public function setTitle(string $title) {
+    public function setTitle(string $title): void {
         $this->title = $title;
         $this->pdfGenerator->SetTitle($title);
     }
@@ -243,14 +215,14 @@ class PDFDocument {
     /**
      * @return string
      */
-    public function getSubject() {
+    public function getSubject(): string {
         return $this->subject;
     }
 
     /**
      * @param string $subject
      */
-    public function setSubject(string $subject) {
+    public function setSubject(string $subject): void {
         $this->subject = $subject;
         $this->pdfGenerator->SetSubject($subject);
     }
@@ -258,14 +230,14 @@ class PDFDocument {
     /**
      * @return array
      */
-    public function getKeywords() {
+    public function getKeywords(): array {
         return $this->keywords;
     }
 
     /**
      * @param array $keywords
      */
-    public function setKeywords(array $keywords) {
+    public function setKeywords(array $keywords): void {
         $this->keywords = $keywords;
         $this->pdfGenerator->SetKeywords(implode(", ", $keywords));
     }
@@ -273,7 +245,7 @@ class PDFDocument {
     /**
      * @param mixed $keyword
      */
-    public function addKeyword($keyword) {
+    public function addKeyword(mixed $keyword): void {
         $this->keywords[] = $keyword;
         $this->pdfGenerator->SetKeywords(implode(", ", $this->keywords));
     }
@@ -283,14 +255,14 @@ class PDFDocument {
      *
      * @return string
      */
-    protected function getDefaultFont() {
+    protected function getDefaultFont(): string {
         return "Helvetica";
     }
 
     /**
      * Include custom Config file
      */
-    protected function includeConfig() {
+    protected function includeConfig(): void {
 
         // Overwrite definitions
         if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {

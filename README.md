@@ -2,8 +2,6 @@
 
 Helper whose goal is to simplify the process of generating PDF documents using the [TCPDF library](https://tcpdf.org).
 
-This bundle is compatible with Symfony 4.1 and Symfony 5.0. Symfony 3.4 compatibility abandoned.
-
 ## Installation
 
 This bundle can be installed by Composer:

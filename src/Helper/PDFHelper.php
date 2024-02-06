@@ -6,19 +6,9 @@ use Adamski\Symfony\PDFBundle\Model\PDFDocument;
 use Twig\Environment;
 
 class PDFHelper {
-
-    /**
-     * @var Environment
-     */
-    protected $twigEnvironment;
-
-    /**
-     * PDFHelper constructor.
-     *
-     * @param Environment $twigEnvironment
-     */
-    public function __construct(Environment $twigEnvironment) {
-        $this->twigEnvironment = $twigEnvironment;
+    public function __construct(
+        private readonly Environment $twigEnvironment
+    ) {
     }
 
     /**
@@ -32,7 +22,7 @@ class PDFHelper {
      * @param int    $fontSize
      * @return PDFDocument
      */
-    public function initDocument(string $orientation = "P", string $unit = "mm", string $format = "A4", bool $unicode = true, string $encoding = "UTF-8", int $fontSize = 10) {
+    public function initDocument(string $orientation = "P", string $unit = "mm", string $format = "A4", bool $unicode = true, string $encoding = "UTF-8", int $fontSize = 10): PDFDocument {
         return new PDFDocument($this->twigEnvironment, $orientation, $unit, $format, $unicode, $encoding, $fontSize);
     }
 }
